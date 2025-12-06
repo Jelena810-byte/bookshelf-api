@@ -85,6 +85,23 @@ bookshelf/               # Main project folder
 
 
 
+
+# 🎯  Backend According To The Wireframe
+
+
+# Wireframe Box	 # Django API Endpoint
+* Sign Up	         POST /bookshelf/signup/
+* Sign In	         POST /bookshelf/login/ (JWT)
+* Home (list books)	GET /books/
+* Add a Book	      POST /books/
+* Book Details	      GET /books/<id>/
+* Update Book	      PUT /books/<id>/update/
+* Delete Book	      DELETE /books/<id>/delete/
+
+
+
+
+
 # 🎯 Learning Objectives
 
 # By working through this project, we will learn how to:
