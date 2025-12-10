@@ -1,3 +1,4 @@
+import random
 from rest_framework import generics, permissions
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -8,6 +9,11 @@ from .serializers import BookSerializer, UserSerializer
 from rest_framework.exceptions import PermissionDenied
 from rest_framework_simplejwt.tokens import RefreshToken
 
+class Home(APIView):
+    permission_classes = [permissions.AllowAny]
+
+    def get(self, request):
+        return Response({"message": "Welcome to the Bookshelf API home page!"})
 
 
 #from django.http import HttpResponse
@@ -59,10 +65,10 @@ class VerifyUserView(APIView):
         'user': UserSerializer(user).data
     })
 
-class Home(APIView):
-    def get(self, request):
-        content = {'message': 'Welcome to the cat-collector api home route!'}
-        return Response(content)
+# class Home(APIView):
+    #def get(self, request):
+        #content = {'message': 'Welcome to the cat-collector api home route!'}
+        #return Response(content)
 
 
 class IsOwner(permissions.BasePermission):
@@ -94,6 +100,15 @@ class BookListCreateView(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
+
+
+class RecommendedBooksView(APIView):
+    def get(self, request):
+        books = list(Book.objects.all())
+        recommended = random.sample(books, min(3, len(books)))
+        serializer = BookSerializer(recommended, many=True)
+        return Response(serializer.data)
+
 
 
 class BookDetailView(generics.RetrieveAPIView):
