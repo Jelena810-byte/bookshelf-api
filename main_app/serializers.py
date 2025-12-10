@@ -1,11 +1,11 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from .models import Book, Genre
+from .models import Book
 
-class GenreSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Genre
-        fields = ['id', 'name']
+# class GenreSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Genre
+#         fields = ['id', 'name']
 
 
 
@@ -28,13 +28,13 @@ class UserSerializer(serializers.ModelSerializer):
 
 class BookSerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
-    author_name = serializers.ReadOnlyField(source='author.name')
-    genres_names = serializers.SlugRelatedField(
-        many=True,
-        read_only=True,
-        slug_field='name',
-        source='genres'
-    )
+    # author_name = serializers.ReadOnlyField(source='author.name')
+    # genres_names = serializers.SlugRelatedField(
+    #     many=True,
+    #     read_only=True,
+    #     slug_field='name',
+    #     source='genres'
+    # )
 
 
     class Meta:
