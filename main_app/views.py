@@ -88,13 +88,13 @@ class IsOwner(permissions.BasePermission):
 #         }
     #})
 
-class BookListCreateView(generics.ListCreateAPIView):
+class BookList(generics.ListCreateAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
     permission_classes = [permissions.IsAuthenticated]
     
     def get_queryset(self):
-        # Users see only their own books
+        owner = self.request.user
         return Book.objects.filter(owner=self.request.user)
 
 
